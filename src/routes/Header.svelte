@@ -11,6 +11,9 @@
 			<li aria-current={$page.url.pathname.startsWith('/reviews') ? 'page' : undefined}>
 				<a href="/reviews">Reviews</a>
 			</li>
+			<li>
+				<button>SyncDB</button>
+			</li>
 		</ul>
 	</nav>
 </header>
