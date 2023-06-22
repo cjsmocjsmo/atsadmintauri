@@ -5,17 +5,22 @@
 <header>
 	<nav>
 		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'estimates' : undefined}>
-				<a href="/">Estimates</a>
+			
+			<li aria-current={$page.url.pathname === '/estimates' ? 'estimates' : undefined}>
+				<a href="/estimates">Estimates</a>
 			</li>
 			<li aria-current={$page.url.pathname.startsWith('/reviews') ? 'page' : undefined}>
 				<a href="/reviews">Reviews</a>
 			</li>
-			<li>
-				<button>SyncDB</button>
+			<li aria-current={$page.url.pathname === '/' ? 'Logout' : undefined}>
+				<a href="/">Logout</a>
 			</li>
 		</ul>
+		
 	</nav>
+	<!-- <li>
+				<button>SyncDB</button>
+			</li> -->
 </header>
 
 <style>
