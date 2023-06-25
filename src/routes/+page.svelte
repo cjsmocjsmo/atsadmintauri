@@ -1,12 +1,21 @@
 <script>
+	import { invoke } from '@tauri-apps/api/tauri';
 	import img from './Images/test400.webp';
+
+	let name = '';
+	let greetingMsg = '';
+
+	async function greet() {
+		greetingMsg = await invoke('greet', {name})
+	}
 </script>
 
 <body>
-	<!-- <div class="syncBtn">
-		<button>SyncDB</button>
-	</div> -->
-
+	<div class="syncBtn">
+		<input id="greet-input" placeholder="Enter your name" bind:value="{name}"/>
+		<button on:click="{greet}">greet</button>
+		<p>this is greet: {greetingMsg}</p>
+	</div>
 	<div class="card">
 		<div class="form">
 			<h3>Admin Login</h3>
@@ -18,14 +27,16 @@
 				<i class="fa fa-lock" />
 				<input type="password" placeholder="Enter your password" />
 			</div>
-			<a href="#"></a>
+			<p />
+			<p />
 			<button>Login</button>
-			<p></p>
+			<p />
+			<p />
 		</div>
 		<div class="image">
 			<div class="overlay">
 				<h3>We Cut Trees<br />Alpha Tree Service</h3>
-				<p>let's us cut one for you</p>
+				<!-- <p>let us cut one for you</p> -->
 			</div>
 		</div>
 	</div>
@@ -59,7 +70,7 @@
 	}
 
 	.image {
-		background-image: url('../images/bg.jpg');
+		background-image: url('./Images/test400.webp');
 		background-size: cover;
 		background-position: center;
 	}
@@ -79,15 +90,15 @@
 		color: white;
 		letter-spacing: 1px;
 		font-size: 25px;
-		font-weight: 700;
+		font-weight: 900;
 		opacity: 0.6;
 	}
-	.overlay p {
+	/* .overlay p {
 		color: white;
-		font-size: 13px;
+		font-size: 16px;
 		font-weight: bold;
 		opacity: 0.6;
-	}
+	} */
 
 	.form {
 		padding: 60px 25px;
@@ -133,12 +144,12 @@
 		font-size: 15px;
 	}
 
-	.form > a {
+	/* .form > a {
 		color: #7227d5;
 		text-decoration: none;
 		font-size: 14px;
 		margin-bottom: 35px;
-	}
+	} */
 
 	button {
 		height: 45px;
