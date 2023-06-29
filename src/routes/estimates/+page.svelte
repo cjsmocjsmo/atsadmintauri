@@ -1,11 +1,13 @@
 <script>
 	import img from '../Images/test400.webp';
+	import Header from '../Header.svelte';
 </script>
 
 <body>
-	<div class="syncBtn">
+	<Header />
+	<!-- <div class="syncBtn">
 		<button>SyncDB</button>
-	</div>
+	</div> -->
 	<!-- <h1>Estimates</h1> -->
 	<div class="crap">
 		<div class="imgDiv">
@@ -64,9 +66,9 @@
 </body>
 
 <style>
-	.syncBtn {
+	/* .syncBtn {
 		text-align: center;
-	}
+	} */
 	.comDiv {
 		margin-right: 4em;
 	}

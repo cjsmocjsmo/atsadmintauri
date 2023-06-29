@@ -1,35 +1,65 @@
 <script>
 	import { invoke } from '@tauri-apps/api/tauri';
-	import img from './Images/test400.webp';
+	import { goto } from '$app/navigation';
+	// import img from './Images/test400.webp';
+	
+	// let name = '';
+	// let greetingMsg = '';
 
-	let name = '';
-	let greetingMsg = '';
+	// async function greet() {
+	// 	greetingMsg = await invoke('greet', {name})
+	// }
 
-	async function greet() {
-		greetingMsg = await invoke('greet', {name})
+
+	export let data;
+	let email = '';
+	let password = '';
+	let signedIn = '';
+
+	async function signin() {
+		let bar = data["foo"]
+		console.log(bar)
+		console.log(email)
+		console.log(password)
+		
+		signedIn = await invoke('sign_in', {email, password, bar})
+		console.log("this is signedIn")
+		console.log(signedIn)
+		if (signedIn) {
+			window.location.href = '/estimates'
+		} else {
+			alert('Invalid email or password');
+		}
+		email = '';
+		password = '';
 	}
+
+
 </script>
 
 <body>
-	<div class="syncBtn">
+	<!-- <div class="syncBtn">
 		<input id="greet-input" placeholder="Enter your name" bind:value="{name}"/>
 		<button on:click="{greet}">greet</button>
 		<p>this is greet: {greetingMsg}</p>
+		<p>{signedIn}</p>
 	</div>
+	<br />
+	<br /> -->
 	<div class="card">
 		<div class="form">
 			<h3>Admin Login</h3>
 			<div class="input-field">
 				<i class="fa fa-envelope" />
-				<input type="text" placeholder="Enter your email" />
+				<input type="text" placeholder="Enter your email" bind:value="{email}"/>
 			</div>
 			<div class="input-field">
 				<i class="fa fa-lock" />
-				<input type="password" placeholder="Enter your password" />
+				<input type="password" placeholder="Enter your password" bind:value="{password}"/>
 			</div>
 			<p />
 			<p />
-			<button>Login</button>
+			<button on:click="{signin}">Login</button>
 			<p />
 			<p />
 		</div>
@@ -43,9 +73,7 @@
 </body>
 
 <style>
-	/* .syncBtn {
-		text-align: center;
-	} */
+
 	body {
 		font-family: 'Poppins', sans-serif;
 		height: 100vh;

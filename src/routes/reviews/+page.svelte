@@ -1,8 +1,10 @@
 <script>
+	import Header from '../Header.svelte';
 </script>
 
 <body>
 	<!-- <h1>Reviews</h1> -->
+	<Header />
 
 	<div class="revDiv">
 		<div>
