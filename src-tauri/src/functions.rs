@@ -46,3 +46,101 @@ pub async fn get_admin(email: String, password: String, bar: String) -> bool {
 
     signin
 }
+
+pub async fn get_all_reviews() -> Vec<atstypes::RevOutInfo> {
+    let api_key = dotenv::var("ATS_APIKEY").unwrap();
+    let client = Postgrest::new("https://yluhibvgdlzknijsssbn.supabase.co/rest/v1")
+        .insert_header("apikey", api_key);
+
+    let response = client
+        .from("reviews")
+        .eq("jailed", "Yes")
+        .select("*")
+        .execute()
+        .await;
+
+    let body = response
+        .expect("Unable to unwrap reviews")
+        .text()
+        .await
+        .unwrap();
+
+    println!("body: {}", body.clone());
+
+    let reviews: Vec<atstypes::RevOutInfo> = serde_json::from_str(body.as_str()).unwrap();
+
+    reviews
+}
+
+pub async fn accept_review(revid: String) -> String {
+    let api_key = dotenv::var("ATS_APIKEY").unwrap();
+    let client = Postgrest::new("https://yluhibvgdlzknijsssbn.supabase.co/rest/v1")
+        .insert_header("apikey", api_key);
+
+    let _response = client
+        .from("reviews")
+        .eq("revid", revid)
+        .update("{\"jailed\": \"No\"}")
+        .update("{\"accept\": \"Yes\"}")
+        .execute()
+        .await
+        .unwrap();
+
+    String::from("review has been updated")
+}
+
+pub async fn reject_review(revid: String) -> String {
+    let api_key = dotenv::var("ATS_APIKEY").unwrap();
+    let client = Postgrest::new("https://yluhibvgdlzknijsssbn.supabase.co/rest/v1")
+        .insert_header("apikey", api_key);
+
+    let _response = client
+        .from("reviews")
+        .eq("revid", revid)
+        .update("{\"jailed\": \"No\"}")
+        .update("{\"reject\": \"Yes\"}")
+        .execute()
+        .await
+        .unwrap();
+
+    String::from("review has been updated")
+}
+
+pub async fn all_estimates() -> atstypes::EstOutInfo {
+    let api_key = dotenv::var("ATS_APIKEY").unwrap();
+    let client = Postgrest::new("https://yluhibvgdlzknijsssbn.supabase.co/rest/v1")
+        .insert_header("apikey", api_key);
+
+    let response = client
+        .from("estimates")
+        .eq("completed", "no")
+        .select("*")
+        .execute()
+        .await;
+
+    let body = response
+        .expect("Unable to unwrap estimates")
+        .text()
+        .await
+        .unwrap();
+
+    let estimates: atstypes::EstOutInfo = serde_json::from_str(body.as_str()).unwrap();
+
+    estimates
+}
+
+pub async fn complete_estimate(estid: String) -> String{
+    let api_key = dotenv::var("ATS_APIKEY").unwrap();
+    let client = Postgrest::new("https://yluhibvgdlzknijsssbn.supabase.co/rest/v1")
+        .insert_header("apikey", api_key);
+
+    let _response = client
+        .from("estimates")
+        .eq("estid", estid)
+        .update("{\"completed\": \"yes\"}")
+        .execute()
+        .await
+        .unwrap();
+
+    String::from("estimates have been updated")
+}

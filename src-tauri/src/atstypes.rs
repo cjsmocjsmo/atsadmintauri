@@ -37,16 +37,17 @@ pub struct RevInInfo {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct RevOutInfo {
-    pub id: String,
+    pub id: u32,
     pub acctid: String,
     pub revid: String,
-    // pub name: String,
+    pub name: String,
     pub email: String,
     pub stars: String,
     pub review: String,
     pub reject: String,
     pub accept: String,
     pub jailed: String,
+    pub date: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

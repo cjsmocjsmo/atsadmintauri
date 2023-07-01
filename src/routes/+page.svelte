@@ -1,14 +1,6 @@
 <script>
 	import { invoke } from '@tauri-apps/api/tauri';
-	import { goto } from '$app/navigation';
-	// import img from './Images/test400.webp';
 	
-	// let name = '';
-	// let greetingMsg = '';
-
-	// async function greet() {
-	// 	greetingMsg = await invoke('greet', {name})
-	// }
 
 
 	export let data;
@@ -38,14 +30,6 @@
 </script>
 
 <body>
-	<!-- <div class="syncBtn">
-		<input id="greet-input" placeholder="Enter your name" bind:value="{name}"/>
-		<button on:click="{greet}">greet</button>
-		<p>this is greet: {greetingMsg}</p>
-		<p>{signedIn}</p>
-	</div>
-	<br />
-	<br /> -->
 	<div class="card">
 		<div class="form">
 			<h3>Admin Login</h3>
@@ -172,13 +156,6 @@
 		font-size: 15px;
 	}
 
-	/* .form > a {
-		color: #7227d5;
-		text-decoration: none;
-		font-size: 14px;
-		margin-bottom: 35px;
-	} */
-
 	button {
 		height: 45px;
 		background: #7227d5;
@@ -193,12 +170,6 @@
 		padding-top: 30px;
 		font-size: 14px;
 	}
-
-	/* button + p a {
-		text-decoration: none;
-		color: #7227d5;
-		font-weight: 500;
-	} */
 
 	input::placeholder {
 		font-family: 'Poppins', sans-serif;
