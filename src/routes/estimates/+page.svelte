@@ -1,79 +1,65 @@
 <script>
 	import img from '../Images/test400.webp';
 	import Header from '../Header.svelte';
+	import { onMount } from 'svelte';
+	import { invoke } from '@tauri-apps/api/tauri';
+
+	let estimates = "";
+	onMount(async () => {
+		const ests = await invoke('all_estimates', {});
+		estimates = ests;
+		console.log(estimates);
+	}, [])
+
+	async function complete_est(estid) {
+		const complete = await invoke('complete_estimate', {estid});
+		console.log("completing estimate");
+	}
+
+
 </script>
 
 <body>
 	<Header />
-	<!-- <div class="syncBtn">
-		<button>SyncDB</button>
-	</div> -->
-	<!-- <h1>Estimates</h1> -->
-	<div class="crap">
-		<div class="imgDiv">
-			<img src={img} alt="" />
-		</div>
-		<div class="boo">
-			
-			<div class="boo2">
-				<h1>505-555-1313</h1>
-				<h2>Herman Munster</h2>
-				<h3>Adress: 1313 Mocking Bird Ln</h3>
-				<h3>Email: herman@gmail.com</h3>
-				<div>
-					<button class="acctBtn">Completed</button>
-					<!-- <button class="rejBtn">Reject</button> -->
+
+	{#each estimates as estimate}
+		<div class="crap">
+			<div class="imgDiv">
+				<img src={img} alt="" />
+			</div>
+			<div class="boo">
+				
+				<div class="boo2">
+					<h1>{estimate.phone}</h1>
+					<h2>{estimate.name}</h2>
+					<h3>{estimate.addr}</h3>
+					<h3>{estimate.city} WA</h3>
+					<h3>{estimate.email}</h3>
+					<div>
+						<button class="completeBtn" on:click={() => complete_est(estimate.estid)}>Completed</button>
+					</div>
+				</div>
+
+				<div class="comDiv">
+					<h1>Comment</h1>
+					<p>
+						{estimate.comment}
+					</p>
 				</div>
 			</div>
-
-			<div class="comDiv">
-				<h1>Comment</h1>
-				<p>
-					this is a very long commentthis is a very long commentthis is a very long comment this is
-					a very long comment this is a very long comment
-				</p>
-			</div>
-		</div>
-		
-	</div>
-	<div class="crap">
-		<div class="imgDiv">
-			<img src={img} alt="" />
-		</div>
-		<div class="boo">
 			
-			<div class="boo2">
-				<h1>505-555-1313</h1>
-				<h2>Herman Munster</h2>
-				<h3>1313 Mocking Bird Ln</h3>
-				<h3>herman@gmail.com</h3>
-				<div>
-					<button class="acctBtn">Completed</button>
-					<!-- <button class="rejBtn">Reject</button> -->
-				</div>
-			</div>
-
-			<div class="comDiv">
-				<h1>Comment</h1>
-				<p>
-					this is a very long commentthis is a very long commentthis is a very long comment this is
-					a very long comment this is a very long comment
-				</p>
-			</div>
 		</div>
 		
-	</div>
+	{/each}
+
 </body>
 
 <style>
-	/* .syncBtn {
-		text-align: center;
-	} */
 	.comDiv {
 		margin-right: 4em;
 	}
 
-	.acctBtn {
+	.completeBtn {
 		background-color: green;
 		padding: 1em;
 		margin: 1em;

@@ -13,7 +13,7 @@ pub struct EstInInfo {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct EstOutInfo {
-    pub id: String,
+    pub id: u32,
     pub acctid: String,
     pub estid: String,
     pub name: String,

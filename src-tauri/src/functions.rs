@@ -82,6 +82,7 @@ pub async fn accept_review(revid: String) -> String {
         .eq("revid", revid)
         .update("{\"jailed\": \"No\"}")
         .update("{\"accept\": \"Yes\"}")
+        .update("{\"reject\": \"No\"}")
         .execute()
         .await
         .unwrap();
@@ -99,6 +100,7 @@ pub async fn reject_review(revid: String) -> String {
         .eq("revid", revid)
         .update("{\"jailed\": \"No\"}")
         .update("{\"reject\": \"Yes\"}")
+        .update("{\"accept\": \"No\"}")
         .execute()
         .await
         .unwrap();
@@ -106,14 +108,14 @@ pub async fn reject_review(revid: String) -> String {
     String::from("review has been updated")
 }
 
-pub async fn all_estimates() -> atstypes::EstOutInfo {
+pub async fn all_estimates() -> Vec<atstypes::EstOutInfo> {
     let api_key = dotenv::var("ATS_APIKEY").unwrap();
     let client = Postgrest::new("https://yluhibvgdlzknijsssbn.supabase.co/rest/v1")
         .insert_header("apikey", api_key);
 
     let response = client
         .from("estimates")
-        .eq("completed", "no")
+        .eq("completed", "No")
         .select("*")
         .execute()
         .await;
@@ -124,7 +126,9 @@ pub async fn all_estimates() -> atstypes::EstOutInfo {
         .await
         .unwrap();
 
-    let estimates: atstypes::EstOutInfo = serde_json::from_str(body.as_str()).unwrap();
+    println!("est body: {}", body.clone());
+
+    let estimates: Vec<atstypes::EstOutInfo> = serde_json::from_str(body.as_str()).unwrap();
 
     estimates
 }
@@ -137,7 +141,7 @@ pub async fn complete_estimate(estid: String) -> String{
     let _response = client
         .from("estimates")
         .eq("estid", estid)
-        .update("{\"completed\": \"yes\"}")
+        .update("{\"completed\": \"Yes\"}")
         .execute()
         .await
         .unwrap();

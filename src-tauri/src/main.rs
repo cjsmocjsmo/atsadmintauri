@@ -34,7 +34,7 @@ async fn reject_review(revid: String) -> String{
 }
 
 #[tauri::command]
-async fn all_estimates() -> atstypes::EstOutInfo {
+async fn all_estimates() -> Vec<atstypes::EstOutInfo> {
     let estimates = functions::all_estimates().await;
 
     estimates
